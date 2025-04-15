@@ -10,7 +10,7 @@ coq-lsp is currently untested in this setup.
 
 To get the setup to work, one may need to execute
 ```
-opam install ./coq-lsp.opam --deps-only
+opam install ./coq-lsp/coq-lsp.opam --deps-only
 ```
 from the root directory.
 
