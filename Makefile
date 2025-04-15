@@ -14,7 +14,7 @@ clean:
 
 .PHONY: build
 build:
-	dune build -p rocq-runtime,coq-core,rocq-core,coq,rocq-stdlib,coq-waterproof
+	dune build -p coq-waterproof
 
 .PHONY: all
 all: rocq/config/coq_config.ml build
