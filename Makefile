@@ -1,3 +1,13 @@
+.PHONY: all
+all: build
+
+PKG_SET=coq-lsp/coq-lsp.install rocq/coq-core.install rocq/rocq-core.install rocq/rocq-runtime.install stdlib/rocq-stdlib.install stdlib/coq-stdlib.install coq-waterproof/coq-waterproof.install
+
+.PHONY: build
+build: rocq/config/coq_config.ml
+	dune build $(PKG_SET)
+
+# Ideally we could regenerate this on Rocq updates, usually not needed
 rocq/config/coq_config.ml: rocq
 	EPATH=$(shell pwd) \
 	&& cd rocq \
@@ -12,9 +22,7 @@ rocq/config/coq_config.ml: rocq
 clean:
 	dune clean
 
-.PHONY: build
-build:
-	dune build -p coq-waterproof
-
-.PHONY: all
-all: rocq/config/coq_config.ml build
+# Launch where the _CoqProject file is
+.PHONY: launch
+launch: build
+	dune exec -- code coq-waterproof/
