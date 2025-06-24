@@ -37,7 +37,7 @@ clean:
 
 # Test
 .PHONY: test
-launch: build
+test: build
 	echo "Test not implemented"
 
 # Launch where the _CoqProject file is
