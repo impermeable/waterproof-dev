@@ -18,6 +18,19 @@ rocq/config/coq_config.ml: rocq
 	&& cp theories/dune.disabled theories/dune \
 	&& cp user-contrib/Ltac2/dune.disabled user-contrib/Ltac2/dune
 
+# We set windows parameters a bit better, note the need to use forward
+# slashed (cygpath -m) due to escaping :( , a conversion to `-w` is
+# welcomed if someones has time for this
+.PHONY: winconfig
+winconfig:
+	EPATH=$(shell cygpath -am .) \
+	&& cd vendor/coq \
+	&& ./configure -no-ask -prefix "$$EPATH\\_build\\install\\default\\" \
+	        -libdir "$$EPATH\\_build\\install\\default\\lib\\coq\\" \
+		-native-compiler no \
+	&& cp theories/dune.disabled theories/dune \
+	&& cp user-contrib/Ltac2/dune.disabled user-contrib/Ltac2/dune
+
 .PHONY: clean
 clean:
 	dune clean
