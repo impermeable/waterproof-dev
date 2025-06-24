@@ -1,0 +1,64 @@
+name: Github CI
+
+on:
+  push:
+    branches:
+      - main
+      - v9.2
+      - v9.1
+      - v9.0
+      - v8.20
+  pull_request:
+    branches:
+      - main
+      - v9.2
+      - v9.1
+      - v9.0
+      - v8.20
+
+# Cancels previous runs of the same workflow
+concurrency:
+  group: "${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            ocaml: 4.14.x
+          - os: ubuntu-latest
+            ocaml: 5.3.x
+          - name: Windows Latest
+            ocaml: 4.14.x
+            os: windows-latest
+      fail-fast: false
+
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+
+    steps:
+      - name: 🔭 Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: 🐫 Setup OCaml
+        uses: ocaml/setup-ocaml@v3
+        with:
+          ocaml-compiler: ${{ matrix.ocaml }}
+          dune-cache: true
+
+      - name: 🐫🐪🐫 Get dependencies
+        run: opam exec -- make opam-deps
+
+      - name: 🐛 Special Windows Config [only on Win CI]
+        if: matrix.os == 'windows-latest'
+        run: opam exec -- make winconfig # Due to path quoting, could be fixed
+
+      - name: 🧱 Build waterproof-dev
+        run: opam exec -- make build
+
+      - name: 🐛 Test waterproof-dev
+        run: opam exec -- make test

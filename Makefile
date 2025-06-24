@@ -22,7 +22,18 @@ rocq/config/coq_config.ml: rocq
 clean:
 	dune clean
 
+# Test
+.PHONY: test
+launch: build
+	echo "Test not implemented"
+
 # Launch where the _CoqProject file is
 .PHONY: launch
 launch: build
 	dune exec -- code coq-waterproof/
+
+# Install opam deps
+.PHONY: opam-deps
+opam-deps:
+	opam install ./rocq/rocq-runtime.opam -y --deps-only --with-test
+	opam install ./coq-lsp/coq-lsp.opam -y --deps-only --with-test
