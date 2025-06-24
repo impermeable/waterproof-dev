@@ -10,6 +10,3 @@
 [submodule "coq-waterproof"]
 	path = coq-waterproof
 	url = git@github.com:impermeable/coq-waterproof.git
-[submodule "waterproof-exercises"]
-	path = waterproof-exercises
-	url = git@gitlab.tue.nl:impermeable/waterproof-exercises.git
