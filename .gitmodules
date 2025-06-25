@@ -1,6 +1,6 @@
 [submodule "rocq"]
 	path = rocq
-	url = git@github.com:ejgallego/coq.git
+	url = git@github.com:impermeable/rocq.git
 [submodule "stdlib"]
 	path = stdlib
 	url = git@github.com:rocq-prover/stdlib.git
@@ -9,4 +9,4 @@
 	url = git@github.com:ejgallego/coq-lsp.git
 [submodule "coq-waterproof"]
 	path = coq-waterproof
-	url = git@github.com:ejgallego/coq-waterproof.git
+	url = git@github.com:impermeable/coq-waterproof.git
