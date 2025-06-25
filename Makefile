@@ -15,8 +15,8 @@ rocq/config/coq_config.ml: rocq
 	        -libdir "$$EPATH/_build/install/default/lib/coq" \
 	        -bytecode-compiler yes \
 		-native-compiler no \
-	&& cp theories/dune.disabled theories/dune \
-	&& cp user-contrib/Ltac2/dune.disabled user-contrib/Ltac2/dune
+	&& cp theories/Corelib/dune.disabled theories/Corelib/dune \
+	&& cp theories/Ltac2/dune.disabled theories/Ltac2/dune
 
 # We set windows parameters a bit better, note the need to use forward
 # slashed (cygpath -m) due to escaping :( , a conversion to `-w` is
@@ -24,12 +24,12 @@ rocq/config/coq_config.ml: rocq
 .PHONY: winconfig
 winconfig:
 	EPATH=$(shell cygpath -am .) \
-	&& cd vendor/coq \
+	&& cd rocq \
 	&& ./configure -no-ask -prefix "$$EPATH\\_build\\install\\default\\" \
 	        -libdir "$$EPATH\\_build\\install\\default\\lib\\coq\\" \
 		-native-compiler no \
-	&& cp theories/dune.disabled theories/dune \
-	&& cp user-contrib/Ltac2/dune.disabled user-contrib/Ltac2/dune
+	&& cp theories/Corelib/dune.disabled theories/Corelib/dune \
+	&& cp theories/Ltac2/dune.disabled theories/Ltac2/dune
 
 .PHONY: clean
 clean:
@@ -50,3 +50,17 @@ launch: build
 opam-deps:
 	opam install ./rocq/rocq-runtime.opam -y --deps-only --with-test
 	opam install ./coq-lsp/coq-lsp.opam -y --deps-only --with-test
+
+# Initialise submodules
+.PHONY: submodules-init
+submodules-init:
+	git submodule update --init
+
+# Update submodules from upstream
+.PHONY: submodules-update
+submodules-update:
+	(cd rocq                 && git checkout master     && git pull origin master)
+	(cd stdlib               && git checkout master     && git pull origin master)
+	(cd coq-lsp              && git checkout main       && git pull origin main)
+	(cd coq-waterproof       && git checkout coq-master && git pull origin coq-master)
+	(cd waterproof-exercises && git checkout main       && git pull origin main)
