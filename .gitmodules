@@ -1,12 +1,14 @@
 [submodule "rocq"]
 	path = rocq
-	url = git@github.com:rocq-prover/rocq.git
+	url = git@github.com:impermeable/rocq.git
+        branch = wp_proof_mode
+[submodule "coq-waterproof"]
+	path = coq-waterproof
+	url = git@github.com:impermeable/coq-waterproof.git
+        branch = wp_proof_mode
 [submodule "stdlib"]
 	path = stdlib
 	url = git@github.com:rocq-prover/stdlib.git
 [submodule "coq-lsp"]
 	path = coq-lsp
 	url = git@github.com:ejgallego/coq-lsp.git
-[submodule "coq-waterproof"]
-	path = coq-waterproof
-	url = git@github.com:impermeable/coq-waterproof.git
