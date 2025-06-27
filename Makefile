@@ -42,7 +42,7 @@ test: build
 
 # Launch where the _CoqProject file is
 .PHONY: launch
-launch: build
+launch: 
 	dune exec -- code coq-waterproof/
 
 # Install opam deps
