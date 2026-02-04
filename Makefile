@@ -5,7 +5,7 @@ PKG_SET=coq-lsp/coq-lsp.install rocq/coq-core.install rocq/rocq-core.install roc
 
 .PHONY: build
 build: rocq/config/coq_config.ml
-	dune build $(PKG_SET)
+	dune build $(DUNEOPT) $(PKG_SET)
 
 # Ideally we could regenerate this on Rocq updates, usually not needed
 rocq/config/coq_config.ml: rocq
